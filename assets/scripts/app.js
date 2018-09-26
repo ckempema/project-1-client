@@ -8,5 +8,5 @@
 
 $(() => {
   // your JS code goes here
-  // TODO: Create event listeners
+  // TODO: Create event listeners for all buttons
 })

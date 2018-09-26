@@ -1,3 +1,4 @@
+'use strict'
 /* Contains the game logic for tic tac toe */
 
 class Game {
@@ -66,8 +67,8 @@ class Game {
     Returns true if a win condition exists
     Otherwise returns false */
     // IDEA: Create a checkWin that returns the player rather than bool
-    // TODO: Clean up ugly hardcoded if statements
     // IDEA: Dynamically check for a win condition somehow?
+    // TODO: Clean up ugly hardcoded if statements
     if ((this.gameBoard[0] === this.gameBoard[1] === this.gameBoard[2]) ||
       (this.gameBoard[3] === this.gameBoard[4] === this.gameBoard[5]) ||
       (this.gameBoard[6] === this.gameBoard[7] === this.gameBoard[8]) ||

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Example</title>
+      <title>Tic Tac Toe</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
       <!-- Do not add `link` tags-->
@@ -12,8 +12,59 @@
       <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
     </head>
     <body>
-      <!-- TODO: Create authentication pages -->
-      <!-- TODO: Create Game display-->
       <h1>Tic Tac Toe Game</h1>
+      <!-- TODO: Create Sign in/create account Forms -->
+      <div id=authentication>
+        <form id="sign-up-form">
+          <legend> Create User </legend>
+          <input name="credentials[email]" type="email" required placeholder="Email"/>
+          <input name="credentials[password]" type="password" required placeholder="Password"/>
+          <input name="credentials[password_confirmation]" type="password" placeholder="Confirm Password"/>
+          <input name="create" type="submit" class='btn-default'/>
+        </form>
+
+        <form id="sign-in-form">
+          <legend> Sign In </legend>
+          <input name="credentials[email]" type="email" required placeholder="Email"/>
+          <input name="credentials[password]" type="password" required placeholder="Password"/>
+          <input name="create" type="submit" class='btn-default'/>
+        </form>
+
+        <!-- TODO: Create change password - sign out forms -->
+        <form id="change-password-form">
+          <legend> Change Password </legend>
+          <input name="credentials[old]" type="password" required placeholder="Old Password"/>
+          <input name="credentials[password]" type="password" required placeholder="New Password"/>
+          <input name="create" type="submit" class='btn-default'/>
+        </form>
+
+        <br/>
+        <button id="sign-out-button"> Sign Out </button>
+
+        <!-- TODO: Create a message section -->
+        <br/>
+        <br/>
+        <div id=auth_messages> Nothing to Display </div>
+      </div>
+      <!-- TODO: Create Game Board to show-->
+      <br />
+      <br />
+      <div id=game-board>
+        <div id=gb-row-0>
+          <span id=game-board-0> 1 </span>
+          <span id=game-board-1> 2 </span>
+          <span id=game-board-2> 3 </span>
+        </div>
+        <div id=gb-row-1>
+          <span id=game-board-3> 4 </span>
+          <span id=game-board-4> 5 </span>
+          <span id=game-board-5> 6 </span>
+        </div>
+        <div id=gb-row-2>
+          <span id=game-board-6> 7 </span>
+          <span id=game-board-7> 8 </span>
+          <span id=game-board-8> 9 </span>
+        </div>
+      </div>
     </body>
 </html>
