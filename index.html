@@ -16,6 +16,16 @@
       <h1>Tic Tac Toe Game</h1>
       <!-- TODO: Edit authentication to only show appropriate fields -->
       <div id=authentication>
+        <form id="sign-in-form">
+          <legend> Sign In </legend>
+          <input name="credentials[email]" type="email" required placeholder="Email"/>
+          <input name="credentials[password]" type="password" required placeholder="Password"/>
+          <input name="sign-in" type="submit" class='btn-default'/>
+        </form>
+
+        <br />
+        <button id="create-new-user-button"> Create New User </button>
+
         <form id="sign-up-form">
           <legend> Create User </legend>
           <input name="credentials[email]" type="email" required placeholder="Email"/>
@@ -24,21 +34,14 @@
           <input name="create" type="submit" class='btn-default'/>
         </form>
 
-        <form id="sign-in-form">
-          <legend> Sign In </legend>
-          <input name="credentials[email]" type="email" required placeholder="Email"/>
-          <input name="credentials[password]" type="password" required placeholder="Password"/>
-          <input name="sign-in" type="submit" class='btn-default'/>
-        </form>
-
         <!-- TODO: Create change password - sign out forms -->
         <form id="change-password-form">
           <legend> Change Password </legend>
-          <input name="credentials[old]" type="password" required placeholder="Old Password"/>
-          <input name="credentials[password]" type="password" required placeholder="New Password"/>
+          <input name="passwords[old]" type="password" required placeholder="Old Password"/>
+          <input name="passwords[new]" type="password" required placeholder="New Password"/>
           <input name="change" type="submit" class='btn-default'/>
         </form>
-
+        <button id="change-password-button"> Change Password </button>
         <br/>
         <button id="sign-out-button"> Sign Out </button>
 

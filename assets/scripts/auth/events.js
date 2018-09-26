@@ -13,15 +13,26 @@ const onSignUp = (event) => {
 }
 
 const onSignIn = (event) => {
-  // TODO: Fill in function
+  event.preventDefault()
+  const data = getFormFields(event.target)
+  api.signIn(data)
+    .then(ui.signInSuccess)
+    .catch(ui.failure)
 }
 
 const onChangePassword = (event) => {
-  // TODO: fill in function
+  event.preventDefault()
+  const data = getFormFields(event.target)
+  api.changePassword(data)
+    .then(ui.changePasswordSuccess)
+    .catch(ui.failure)
 }
 
 const onSignOut = (event) => {
-  // TODO: fill in function
+  event.preventDefault()
+  api.signOut()
+    .then(ui.signOutSuccess)
+    .catch(ui.failure)
 }
 
 module.exports = {

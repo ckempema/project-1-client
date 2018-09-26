@@ -7,12 +7,21 @@
 // require('./example')
 
 const authEvents = require('./auth/events.js')
+const state = require('./states.js')
 
 $(() => {
   // your JS code goes here
   // TODO: Create event listeners for all buttons
+  state.setAuthState(0) // set the page to the right appearance
   $('#sign-up-form').on('submit', authEvents.onSignUp)
   $('#sign-in-form').on('submit', authEvents.onSignIn)
   $('#change-password-form').on('submit', authEvents.onChangePassword)
   $('#sign-out-button').on('click', authEvents.onSignOut)
+
+  $('#create-new-user-button').on('click', () => {
+    state.setAuthState(1)
+  })
+  $('#change-password-button').on('click', () => {
+    state.setAuthState(3)
+  })
 })
