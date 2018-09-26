@@ -8,6 +8,7 @@
 
 const authEvents = require('./auth/events.js')
 const state = require('./states.js')
+const logic = require('./gameLogic.js')
 
 $(() => {
   // your JS code goes here
@@ -24,4 +25,10 @@ $(() => {
   $('#change-password-button').on('click', () => {
     state.setAuthState(3)
   })
+
+  for (let i = 0; i < 9; i++) { // set up the game board with event listeners
+    $(`#game-box-${i}`).on('click', () => {
+      logic.takeTurn(i)
+    })
+  }
 })

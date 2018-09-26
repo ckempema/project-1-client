@@ -1,3 +1,17 @@
 @import '~bootstrap/scss/bootstrap';
 
-// TODO: Create a style
+// TODO: Improve a style
+$background-color: #6a6f77;
+$white: #FFFFFF;
+
+body {
+  background-color: $background-color;
+}
+
+.box {
+  align-items: center;
+  border: 1px solid $white;
+  display: flex;
+  height: 80px;
+  justify-content: center;
+}

@@ -1,3 +1,5 @@
+'use strict'
+
 const store = require('./store.js')
 
 // FIXME: Fix states logic to ensure it is always proper
@@ -7,7 +9,8 @@ const setAuthState = (newState) => {
   $('#change-password-form').hide()
   $('#sign-out-button').hide()
   $('#change-password-button').hide()
-  $('#game-board').hide()
+  // FIXME: Remove comment from below line to hide board before login happens
+  // $('#game-board').hide()
   $('#sign-in-form').show()
   $('#create-user-button').show()
   switch (newState) { // Make modifications to default state from parameter
