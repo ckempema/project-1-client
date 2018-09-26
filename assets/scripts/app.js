@@ -28,7 +28,7 @@ $(() => {
 
   for (let i = 0; i < 9; i++) { // set up the game board with event listeners
     $(`#game-box-${i}`).on('click', () => {
-      logic.takeTurn(i)
+      logic.play(i)
     })
   }
 

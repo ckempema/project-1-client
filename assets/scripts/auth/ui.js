@@ -47,7 +47,8 @@ const signOutSuccess = (response) => {
     <br />
     `)
   $('#auth_messages').append(outputHTML)
-  store.user = null // remove the user token and data on logout
+  store.user = null // remove all stored data on logout
+  store.currentGame = null
   state.setAuthState(0)
 }
 

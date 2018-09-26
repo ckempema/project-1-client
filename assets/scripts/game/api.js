@@ -1,5 +1,5 @@
 'use strict'
-
+// NOTE: Different than API file for authentication calls
 const config = require('../config.js')
 const store = require('../store.js')
 

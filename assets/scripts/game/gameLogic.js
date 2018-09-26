@@ -1,17 +1,27 @@
 'use strict'
-const gameData = require('./gameData.js')
-const api = require('./api.js')
 
-const currentGame = new gameData.Game(0, false)
-console.log(currentGame)
+const gameData = require('./gameData.js')
+const api = require('./api.js') // NOTE: different than api file for auth calls
+const store = require('../store.js')
 
 const onNewGame = () => {
   api.newGame()
-    .then(gameData.createGame) // TODO: replace with actual function
+    .then((response) => {
+      store.currentGame = gameData.createGame(response)
+    })
     .catch(console.log) // TODO: replace with actual function
 }
 
+const play = (location) => {
+  const game = store.currentGame
+  if (game !== undefined) {
+    game.takeTurn(location)
+  } else {
+    // FIXME: (low) replace with html output
+    console.log('ERROR: No Game Defined')
+  }
+}
 module.exports = {
-  takeTurn,
-  onNewGame
+  onNewGame,
+  play
 }
