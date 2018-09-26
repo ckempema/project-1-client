@@ -4,15 +4,14 @@
 class Game {
   /* A class that contains the game state as well as functions
   for playing the game */
-  constructor (id) {
-    this.id = id
-    this.cells = ['', '', '', '', '', '', '', '', '']
-    this.over = false
+  constructor (apiGame) {
+    this.id = apiGame.game
+    this.cells = apiGame.cells
     this._currentPlayer = 'x'
-    this.playerX = null
-    this.playerO = null
+    this.playerX = apiGame.player_x
+    this.playerO = apiGame.player_o
     this.status = {
-      over: false,
+      over: apiGame.over,
       winner: null,
       condition: null
     }
@@ -41,34 +40,49 @@ class Game {
     return this._currentPlayer
   }
 
+  takeTurn (location) {
+    /* Handles turn logic including
+      setting correct box, Checking for win, rotating player, increment movesMade, and valating game not over
+      Returns true if everything was valid,
+      false if turn not valid
+      */
+
+    if (!this.status.over) { // If the game is not over
+      if (this.setLocation(location)) { // if the location was set correctly
+        this.movesMade += 1
+        this.checkWin()
+        this.rotatePlayer()
+        return true
+      } else {
+        // FIXME: (low) Remove and replace with html message
+        console.log('WARNING: Invalid Move')
+      }
+    } else {
+      // FIXME: (low) Remove console log and replace with html message
+      console.log(`Game is over. ${this.status.winner} was the winner`)
+      return false
+    }
+  }
+
   setLocation (location) {
     /* Set the value of a location on the gameboard to marker to the given marker
-    Contains validiation of game status and location input
-    *Calls rotate player if move is valid*
+    Contains validiation of location input
     Returns false if failed to set for any reason
     Returns true if valid selection and correct assignment */
-    if (!this.status.over) {
-      if (location < 9) { // Check that location is inside of game board
-        if (this.cells[location] === undefined || this.cells[location] === '') {
-          this.cells[location] = this._currentPlayer
-          this.movesMade += 1
-          $(`#game-box-${location}`).html(this._currentPlayer)
-          this.rotatePlayer()
-          this.checkWin()
-          return true // If there is a need to check for valid moves later
-        } else {
-          // NOTE: Remove console.log from production environment
-          console.log(`Invalid Location: Location: ${location} already set`)
-          return false
-        }
+    if (location < 9) { // Check that location is inside of game board
+      if (this.cells[location] === undefined || this.cells[location] === '') {
+        this.cells[location] = this._currentPlayer
+        $(`#game-box-${location}`).html(this._currentPlayer)
+        return true // If there is a need to check for valid moves later
       } else {
         // NOTE: Remove console.log from production environment
-        console.log(`Invalid location: ${location} is out of bounds`)
+        console.log(`Invalid Location: Location: ${location} already set`)
         return false
       }
     } else {
       // NOTE: Remove console.log from production environment
-      console.log('WARNING: Game is over. No more moves can be made')
+      console.log(`Invalid location: ${location} is out of bounds`)
+      return false
     }
   }
 
@@ -122,7 +136,20 @@ class Game {
   }
 }
 
+const createGame = (response) => {
+  /* Create a new Game object
+  takes in an api game response
+  returns game object */
+
+  const temp = new Game(response.game)
+  console.log(response.game)
+  // NOTE: Remove console.log from production environment
+  console.log(temp)
+  return temp
+}
+
 // TODO: Test game logic
 module.exports = {
-  Game
+  Game,
+  createGame
 }

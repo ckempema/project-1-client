@@ -8,7 +8,7 @@
 
 const authEvents = require('./auth/events.js')
 const state = require('./states.js')
-const logic = require('./gameLogic.js')
+const logic = require('./game/gameLogic.js')
 
 $(() => {
   // your JS code goes here
@@ -31,4 +31,6 @@ $(() => {
       logic.takeTurn(i)
     })
   }
+
+  $('#new-game-button').on('click', logic.onNewGame)
 })
