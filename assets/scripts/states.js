@@ -2,9 +2,25 @@
 
 const store = require('./store.js')
 
+const resetFields = () => {
+  // Reset every form field on the page to blank
+  $('#sign-in-email').val('')
+  $('#sign-in-pwd').val('')
+
+  $('#sign-up-email').val('')
+  $('#sign-up-pwd').val('')
+  $('#sign-up-pwd-conf').val('')
+
+  $('#change-pwd-old').val('')
+  $('#change-pwd-new').val('')
+
+  $('#pull-game-id').val('')
+}
+
 // TODO: Fix states logic to ensure it is always proper
 const setAuthState = (newState) => {
   // Establish a default state (initial login page)
+  resetFields()
   $('#sign-up-form').hide()
   $('#change-password-form').hide()
   $('#sign-out-button').hide()
@@ -14,12 +30,12 @@ const setAuthState = (newState) => {
   $('#create-user-button').show()
   switch (newState) { // Make modifications to default state from parameter
     case 0: // Fresh page not signed in, almost everything hidden
-      store.user = null // ensure that no user token exists in default state
+      store.token = null // ensure that no user token exists in default state
+      store.currentGame = null // Ensure there are no games active
       break
 
     case 1: // Create new user
       $('#sign-up-form').show()
-      $('#sign-in-form').hide()
       $('#create-new-user-button').hide()
       break
 
@@ -33,6 +49,7 @@ const setAuthState = (newState) => {
 
     case 3: // Password change
       setAuthState(2)
+      $('#change-password-button').hide()
       $('#change-password-form').show()
       break
   }

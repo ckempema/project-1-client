@@ -7,10 +7,7 @@ const signUpSuccess = (response) => {
   $('#auth_messages').html('')
   // TODO: Remove unnecessary data from output
   const userHTML = (`
-    <h4> Success: Account Created!</h4>
-    <p>User Email: ${response.user.email}</p>
-    <p>ID: ${response.user.id}</p>
-    <br />
+    <h4> New User: ${response.user.email}</h4>
     `)
   $('#auth_messages').append(userHTML)
   state.setAuthState(0)
@@ -20,10 +17,7 @@ const signInSuccess = (response) => {
   $('#auth_messages').html('')
   // TODO: Remove unnecessary data from output
   const userHTML = (`
-    <h4> Success: Signed In!</h4>
-    <p>User Email: ${response.user.email}</p>
-    <p>ID: ${response.user.id}</p>
-    <br />
+    <h6>User X: ${response.user.email}<h6>
     `)
   $('#auth_messages').append(userHTML)
   store.user = response.user
@@ -33,8 +27,7 @@ const signInSuccess = (response) => {
 const changePasswordSuccess = (response) => {
   $('#auth_messages').html('')
   const outputHTML = (`
-    <h4> Success: Password Changed!</h4>
-    <br />
+    <h6>Password Changed!</h6>
     `)
   $('#auth_messages').append(outputHTML)
   state.setAuthState(2)
@@ -43,8 +36,7 @@ const changePasswordSuccess = (response) => {
 const signOutSuccess = (response) => {
   $('#auth_messages').html('')
   const outputHTML = (`
-    <h4> Success: Signed Out!</h4>
-    <br />
+    <h4> Signed Out</h4>
     `)
   $('#auth_messages').append(outputHTML)
   store.user = null // remove all stored data on logout

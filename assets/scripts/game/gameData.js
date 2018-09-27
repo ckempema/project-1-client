@@ -7,23 +7,36 @@ class Game {
   for playing the game */
   constructor (apiGame) {
     this.id = apiGame.id
-    // NOTE: remove console log from production environment
-    console.log(`GAME ID: ${this.id}`)
+    // TODO: remove console log from production environment
     this.cells = apiGame.cells
-    this._currentPlayer = 'x'
-    this.playerX = apiGame.player_x
-    this.playerO = apiGame.player_o
+    this._currentPlayer = 'x' // NOTE: contains marker not player object
+    this.player_x = apiGame.player_x
+    this.player_o = apiGame.player_o
     this.status = {
       over: apiGame.over,
       winner: null,
       condition: null
     }
     this.movesMade = 0
+    this.checkWin() // Set the win status to the correct values
+    this.updateCurrentPlayer() // Set the current player to the right player
   }
 
   getCurrentPlayer () {
     // Getter function for this._currentPlayer
     return this._currentPlayer
+  }
+
+  getPlayerObject (marker) {
+    /* getter function that returns the player object associated with the proveded marker */
+    switch (marker) {
+      case 'x':
+        return this.playerX
+      case 'o':
+        return this.playerO
+      default:
+        return null
+    }
   }
 
   rotatePlayer () {
@@ -54,6 +67,7 @@ class Game {
       if (this.setLocation(location)) { // if the location was set correctly
         this.movesMade += 1
         this.rotatePlayer()
+        $(`#current-msg-display`).html(this.statusToString())
         return true
       } else {
         // FIXME: (low) Remove and replace with html message
@@ -81,7 +95,7 @@ class Game {
           marker: this._currentPlayer,
           over: this.status.over
         }
-        api.updateGame(this.id, update) // update the server copy
+        api.updateGameServer(this.id, update) // update the server copy
           .then((response) => {
             this.cells = response.game.cells // ensure local equals server copy
           })
@@ -144,22 +158,75 @@ class Game {
       this.status.condition = [2, 4, 6]
     } else if (this.movesMade === 9) {
       this.status.over = true
-      this.status.winner = null
+      this.status.winner = 'tie'
       this.status.condition = []
     }
     return this.status
   }
+
+  boardToHTML () {
+    /* return a pretty string of the game state */
+    const temp = this.cells
+    for (let i = 0; i < temp.length; i++) {
+      if (temp[i] === '') {
+        temp[i] = '-'
+      }
+    }
+    const htmlStr = (`
+      <div>${temp[0]}${temp[1]}${temp[2]}</div>
+      <div>${temp[3]}${temp[4]}${temp[5]}</div>
+      <div>${temp[6]}${temp[7]}${temp[8]}</div>
+    `)
+    return htmlStr
+  }
+
+  statusToString () {
+    let retStr = ''
+    if (this.status.over) {
+      if (this.status.winner === 'tie') {
+        retStr += `ID: ${this.id} >Status: Tied`
+      } else {
+        retStr += `ID: ${this.id} >Status: Player ${this.status.winner} Wins!`
+      }
+    } else {
+      retStr += `ID: ${this.id} >Status: Ongoing Waiting For Player ${this._currentPlayer.toUpperCase()}`
+    }
+    return retStr
+  }
+
+  updateCurrentPlayer () {
+    let x = 0
+    let o = 0
+    for (let i = 0; i < this.cells.length; i++) {
+      if (this.cells[i] === 'o') {
+        o++
+      } else if (this.cells[i] === 'x') {
+        x++
+      }
+    }
+    if (x > o) {
+      this._currentPlayer = 'o'
+    } else if (o >= x) {
+      this._currentPlayer = 'x'
+    } else {
+      this._currentPlayer = 'x'
+    }
+  }
+
+  setBoard () {
+    /* Sets the gameplay board to whatever show the game */
+    for (let i = 0; i < 9; i++) {
+      $(`#game-box-${i}`).html(this.cells[i])
+    }
+  }
 }
 
-const createGame = (response) => {
+const createGame = (game) => {
   /* Create a new Game object
   takes in an api game response
   returns game object */
 
-  const temp = new Game(response.game)
-  console.log(response.game)
-  // NOTE: Remove console.log from production environment
-  console.log(temp)
+  const temp = new Game(game)
   return temp
 }
 

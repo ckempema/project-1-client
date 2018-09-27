@@ -33,4 +33,8 @@ $(() => {
       logic.play(i)
     })
   }
+  $('#get-all-games-button').on('click', () => { logic.showGames() })
+  $('#get-fin-games-button').on('click', () => { logic.showGames(true) })
+  $('#get-unfin-games-button').on('click', () => { logic.showGames(false) })
+  $('#get-game-form').on('submit', logic.changeGame)
 })
