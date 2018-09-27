@@ -13,6 +13,7 @@ const onNewGame = () => {
 }
 
 const play = (location) => {
+  // Play the game from user click
   const game = store.currentGame
   if (game !== undefined) {
     game.takeTurn(location)
@@ -21,6 +22,7 @@ const play = (location) => {
     console.log('ERROR: No Game Defined')
   }
 }
+
 module.exports = {
   onNewGame,
   play

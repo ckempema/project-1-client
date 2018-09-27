@@ -1,11 +1,14 @@
 'use strict'
 /* Contains the game logic for tic tac toe */
+const api = require('./api.js')
 
 class Game {
   /* A class that contains the game state as well as functions
   for playing the game */
   constructor (apiGame) {
-    this.id = apiGame.game
+    this.id = apiGame.id
+    // NOTE: remove console log from production environment
+    console.log(`GAME ID: ${this.id}`)
     this.cells = apiGame.cells
     this._currentPlayer = 'x'
     this.playerX = apiGame.player_x
@@ -50,7 +53,6 @@ class Game {
     if (!this.status.over) { // If the game is not over
       if (this.setLocation(location)) { // if the location was set correctly
         this.movesMade += 1
-        this.checkWin()
         this.rotatePlayer()
         return true
       } else {
@@ -71,8 +73,21 @@ class Game {
     Returns true if valid selection and correct assignment */
     if (location < 9) { // Check that location is inside of game board
       if (this.cells[location] === undefined || this.cells[location] === '') {
-        this.cells[location] = this._currentPlayer
+        this.cells[location] = this._currentPlayer // update the local copy
+        this.checkWin()
+
+        const update = { // prepare an update object for the api
+          index: location,
+          marker: this._currentPlayer,
+          over: this.status.over
+        }
+        api.updateGame(this.id, update) // update the server copy
+          .then((response) => {
+            this.cells = response.game.cells // ensure local equals server copy
+          })
+          .catch(console.log) // TODO: (medium) replace console log with failure function that outputs to game terminal
         $(`#game-box-${location}`).html(this._currentPlayer)
+
         return true // If there is a need to check for valid moves later
       } else {
         // NOTE: Remove console.log from production environment

@@ -2,15 +2,14 @@
 
 const store = require('./store.js')
 
-// FIXME: Fix states logic to ensure it is always proper
+// TODO: Fix states logic to ensure it is always proper
 const setAuthState = (newState) => {
   // Establish a default state (initial login page)
   $('#sign-up-form').hide()
   $('#change-password-form').hide()
   $('#sign-out-button').hide()
   $('#change-password-button').hide()
-  // FIXME: Remove comment from below line to hide board before login happens
-  // $('#game-board').hide()
+  $('#game-board').hide()
   $('#sign-in-form').show()
   $('#create-user-button').show()
   switch (newState) { // Make modifications to default state from parameter
