@@ -44,13 +44,13 @@ const signOutSuccess = (response) => {
   state.setAuthState(0)
 }
 
-// FIXME: Create failure functions for each possible state rather than a blanket case
+// OPTIMIZE: Create failure functions for each possible state rather than a blanket case
 const failure = (response) => {
-  $('#content').html('')
+  $('#auth_messages').html('')
   const responseHTML = (`
-    <h3>ERROR: Something Failed. Go find it</h3>
+    <h3>ERROR: Failed to authenticate with server</h3>
     `)
-  $('#content').append(responseHTML)
+  $('#auth_messages').append(responseHTML)
 }
 
 module.exports = {

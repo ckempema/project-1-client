@@ -11,14 +11,17 @@ const onNewGame = () => {
     .then((response) => {
       store.currentGame = gameData.createGame(response.game)
       store.currentGame.setBoard()
+      $(`#current-msg-display`).html(`Game ${store.currentGame.id} Created: X moves first`)
     })
-    .catch(console.log) // TODO: replace with actual function
+    .catch((response) => {
+      $(`#current-msg-display`).html('ERROR: Unable to connect to Server')
+    })
 }
 
 const play = (location) => {
   /* logic to make a players move based on passed location */
   const game = store.currentGame // the game to play
-  if (game !== undefined) {
+  if (game !== undefined && game !== null) {
     game.takeTurn(location)
   } else {
     $(`#current-msg-display`).html('ERROR: no game is currently active. Select a game or select "New Game Button"')
@@ -27,15 +30,18 @@ const play = (location) => {
 
 const showGames = (status) => {
   /* Show all the game data retrieved from server call */
-  console.log('DEBUG: showGames (gameLogic.js) called')
   if (status !== undefined) {
     api.getGames(status)
       .then(ui.dispGames)
-      .catch(console.log)
+      .catch((response) => {
+        $(`#current-msg-display`).html('ERROR: Unable to collect games from server')
+      })
   } else {
     api.getAllGames()
       .then(ui.dispGames)
-      .catch(console.log)
+      .catch((response) => {
+        $(`#current-msg-display`).html('ERROR: Unable to collect games from server')
+      })
   }
 }
 
@@ -44,10 +50,11 @@ const changeGame = (event) => {
   event.preventDefault()
   const id = getFormFields(event.target).id
   // TODO: remove console log statement from production environment
-  console.log(`DEBUG: pullGame (gameLogic.js) called id: ${id}`)
   api.pullGame(id)
     .then(ui.playGame)
-    .catch(console.log)
+    .catch((response) => {
+      $(`#current-msg-display`).html(`ERROR: Unable to retrive game ${id} from server`)
+    })
 }
 
 module.exports = {

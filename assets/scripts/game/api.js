@@ -30,7 +30,6 @@ const getGames = (status) => {
   /* retrieve all games by user from server.
   returns object of all games
   ifOver parameter can be used to toggle all games or only finished games */
-  console.log(`DEBUGGING: getGames called, status: ${status}`)
   return $.ajax({
     headers: {
       Authorization: `Token token=${store.user.token}`

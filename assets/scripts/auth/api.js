@@ -5,7 +5,6 @@ const store = require('../store.js')
 
 const signUp = (userData) => {
   // FIXME: Change to proper api calls
-  console.log(userData)
   return $.ajax({
     url: config.apiUrl + '/sign-up',
     method: 'POST',

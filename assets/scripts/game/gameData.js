@@ -70,12 +70,9 @@ class Game {
         $(`#current-msg-display`).html(this.statusToString())
         return true
       } else {
-        // FIXME: (low) Remove and replace with html message
-        console.log('WARNING: Invalid Move')
+        $(`#current-msg-display`).html(`WARNING: Invalid Move`)
       }
     } else {
-      // FIXME: (low) Remove console log and replace with html message
-      console.log(`Game is over. ${this.status.winner} was the winner`)
       return false
     }
   }
@@ -99,18 +96,18 @@ class Game {
           .then((response) => {
             this.cells = response.game.cells // ensure local equals server copy
           })
-          .catch(console.log) // TODO: (medium) replace console log with failure function that outputs to game terminal
+          .catch((response) => {
+            $(`#current-msg-display`).html('ERROR: Unable to update server')
+          })
         $(`#game-box-${location}`).html(this._currentPlayer)
 
         return true // If there is a need to check for valid moves later
       } else {
-        // NOTE: Remove console.log from production environment
-        console.log(`Invalid Location: Location: ${location} already set`)
+        $(`#current-msg-display`).html(`WARNING: Game ${this.id} location ${location} has already been selected`)
         return false
       }
     } else {
-      // NOTE: Remove console.log from production environment
-      console.log(`Invalid location: ${location} is out of bounds`)
+      $(`#current-msg-display`).html(`ERROR: Move at ${location} is out of bounds`)
       return false
     }
   }
@@ -186,7 +183,7 @@ class Game {
       if (this.status.winner === 'tie') {
         retStr += `ID: ${this.id} >Status: Tied`
       } else {
-        retStr += `ID: ${this.id} >Status: Player ${this.status.winner} Wins!`
+        retStr += `ID: ${this.id} >Status: Player ${this.status.winner.toUpperCase()} Wins!`
       }
     } else {
       retStr += `ID: ${this.id} >Status: Ongoing Waiting For Player ${this._currentPlayer.toUpperCase()}`

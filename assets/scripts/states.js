@@ -27,7 +27,7 @@ const setAuthState = (newState) => {
   $('#change-password-button').hide()
   $('#game-board').hide()
   $('#sign-in-form').show()
-  $('#create-user-button').show()
+  $('#create-new-user-button').show()
   switch (newState) { // Make modifications to default state from parameter
     case 0: // Fresh page not signed in, almost everything hidden
       store.token = null // ensure that no user token exists in default state
