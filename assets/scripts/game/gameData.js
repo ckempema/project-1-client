@@ -7,7 +7,6 @@ class Game {
   for playing the game */
   constructor (apiGame) {
     this.id = apiGame.id
-    // TODO: remove console log from production environment
     this.cells = apiGame.cells
     this._currentPlayer = 'x' // NOTE: contains marker not player object
     this.player_x = apiGame.player_x
@@ -67,6 +66,7 @@ class Game {
       if (this.setLocation(location)) { // if the location was set correctly
         this.movesMade += 1
         this.rotatePlayer()
+        this.checkWin()
         $(`#current-msg-display`).html(this.statusToString())
         return true
       } else {
@@ -99,7 +99,7 @@ class Game {
           .catch((response) => {
             $(`#current-msg-display`).html('ERROR: Unable to update server')
           })
-        $(`#game-box-${location}`).html(this._currentPlayer)
+        $(`#game-box-${location}`).html(this._currentPlayer.toUpperCase())
 
         return true // If there is a need to check for valid moves later
       } else {
@@ -153,7 +153,7 @@ class Game {
       this.status.over = true
       this.status.winner = this.cells[2]
       this.status.condition = [2, 4, 6]
-    } else if (this.movesMade === 9) {
+    } else if (this.movesMade >= 9) {
       this.status.over = true
       this.status.winner = 'tie'
       this.status.condition = []
@@ -183,10 +183,10 @@ class Game {
       if (this.status.winner === 'tie') {
         retStr += `ID: ${this.id} >Status: Tied`
       } else {
-        retStr += `ID: ${this.id} >Status: Player ${this.status.winner.toUpperCase()} Wins!`
+        retStr += `ID: ${this.id} > Status: Player ${this.status.winner.toUpperCase()} Wins!`
       }
     } else {
-      retStr += `ID: ${this.id} >Status: Ongoing Waiting For Player ${this._currentPlayer.toUpperCase()}`
+      retStr += `ID: ${this.id} > Status: Ongoing Waiting For Player ${this._currentPlayer.toUpperCase()}`
     }
     return retStr
   }
@@ -208,6 +208,7 @@ class Game {
     } else {
       this._currentPlayer = 'x'
     }
+    this.movesMade = x + o
   }
 
   setBoard () {

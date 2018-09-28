@@ -10,7 +10,7 @@ const signUpSuccess = (response) => {
     <h4> New User: ${response.user.email}</h4>
     `)
   $('#auth_messages').append(userHTML)
-  state.setAuthState(0)
+  state.reset()
 }
 
 const signInSuccess = (response) => {
@@ -21,7 +21,7 @@ const signInSuccess = (response) => {
     `)
   $('#auth_messages').append(userHTML)
   store.user = response.user
-  state.setAuthState(2)
+  state.setSignedIn()
 }
 
 const changePasswordSuccess = (response) => {
@@ -30,7 +30,7 @@ const changePasswordSuccess = (response) => {
     <h6>Password Changed!</h6>
     `)
   $('#auth_messages').append(outputHTML)
-  state.setAuthState(2)
+  state.setSignedIn(2)
 }
 
 const signOutSuccess = (response) => {
@@ -41,7 +41,7 @@ const signOutSuccess = (response) => {
   $('#auth_messages').append(outputHTML)
   store.user = null // remove all stored data on logout
   store.currentGame = null
-  state.setAuthState(0)
+  state.reset()
   $('#game-board').trigger('reset')
   $('#data-msg-display').val('')
   $('#current-msg-display').val('')

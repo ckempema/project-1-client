@@ -49,7 +49,6 @@ const changeGame = (event) => {
   /* Replace current game with game given by event field */
   event.preventDefault()
   const id = getFormFields(event.target).id
-  // TODO: remove console log statement from production environment
   api.pullGame(id)
     .then(ui.playGame)
     .catch((response) => {

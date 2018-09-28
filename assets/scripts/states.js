@@ -12,44 +12,98 @@ const resetFields = () => {
   $('#current-msg-display').val('')
 }
 
-// TODO: Fix states logic to ensure it is always proper
-const setAuthState = (newState) => {
-  // Establish a default state (initial login page)
-  resetFields()
+const reset = () => {
+  // Sets a base state of all data blanked on initial login page
   $('#sign-up-form').hide()
+
+  // Hidden Auth controls
+  $('#user-auth-buttons').hide()
   $('#change-password-form').hide()
-  $('#sign-out-button').hide()
-  $('#change-password-button').hide()
+
+  // Hidden Game info
   $('#game-board').hide()
+  $('#game-data').hide()
+
+  $('#retrieve-data').hide()
+  // What to actually display
+  $('#page-title').show()
   $('#sign-in-form').show()
   $('#create-new-user-button').show()
-  switch (newState) { // Make modifications to default state from parameter
-    case 0: // Fresh page not signed in, almost everything hidden
-      store.token = null // ensure that no user token exists in default state
-      store.currentGame = null // Ensure there are no games active
-      break
+  resetFields()
+  store.token = null // ensure that no user token exists in default state
+  store.currentGame = null // Ensure there are no games active
+}
 
-    case 1: // Create new user
-      $('#sign-up-form').show()
-      $('#create-new-user-button').hide()
-      break
+const showCreateUser = () => {
+  // Sets the page state after user clicks the create user button to show the create user form
+  $('#sign-up-form').show()
+  $('#create-new-user-button').hide()
+}
 
-    case 2: // Signed in
-      $('#create-new-user-button').hide()
-      $('#sign-in-form').hide()
-      $('#change-password-button').show()
-      $('#sign-out-button').show()
-      $('#game-board').show()
-      break
+const setSignedIn = () => {
+  resetFields() // Empty all input fields
+  // Auth data:
+  $('#create-new-user-button').hide()
+  $('#sign-up-form').hide()
+  $('#sign-in-form').hide()
+  $('#page-title').hide()
 
-    case 3: // Password change
-      setAuthState(2)
-      $('#change-password-button').hide()
-      $('#change-password-form').show()
-      break
-  }
+  $('#user-auth-buttons').show()
+  $('#change-password-button').show()
+
+  // Game Data:
+  $('#game-board').show() // Show all the data
+  $('#game-data').show()
+
+  $('#get-game-form').hide() // Then hide what shouldnt be displayed
+  $('#retrieve-data').hide()
+  $('#hide-select-game-button').hide()
+  $('#hide-data-button').hide()
+}
+
+const showChangePassword = () => {
+  $('#change-password-button').hide()
+  $('#change-password-form').show()
+}
+
+const hideChangePassword = () => {
+  $('#change-password-button').show()
+  $('#change-password-form').hide()
+}
+
+const showRetrieveData = () => {
+  $('#retrieve-data').show()
+  $('#hide-data-button').show()
+  $('#show-data-buttons').hide()
+  // TODO fill in
+}
+
+const hideRetrieveData = () => {
+  $('#hide-data-button').hide()
+  $('#retrieve-data').hide()
+  $('#show-data-buttons').show()
+}
+
+const showSelectGame = () => {
+  $('#get-game-form').show()
+  $('#hide-select-game-button').show()
+  $('#get-game-button').hide()
+}
+
+const hideSelectGame = () => {
+  $('#get-game-form').hide()
+  $('#hide-select-game-button').hide()
+  $('#get-game-button').show()
 }
 
 module.exports = {
-  setAuthState
+  reset,
+  showCreateUser,
+  setSignedIn,
+  showChangePassword,
+  hideChangePassword,
+  showRetrieveData,
+  hideRetrieveData,
+  showSelectGame,
+  hideSelectGame
 }

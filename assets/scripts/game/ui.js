@@ -21,10 +21,10 @@ const dispGames = (response) => {
 
     const msgHTML = (`
       <span>
-        <h5> Game ID: ${currentGame.id} </h5>
+        <p> Game ID: ${currentGame.id} <p>
         <span> ${gameStr} </span>
         <span> ${statusStr} </span>
-        <br />
+        <br/>
       </span>
     `)
     $('#data-msg-display').append(msgHTML)

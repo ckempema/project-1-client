@@ -13,18 +13,17 @@ const logic = require('./game/gameLogic.js')
 $(() => {
   // your JS code goes here
   // TODO: Create event listeners for all buttons
-  state.setAuthState(0) // set the page to the right appearance
+  state.reset() // set the page to the right appearance
   // Authorization Events:
   $('#sign-up-form').on('submit', authEvents.onSignUp)
   $('#sign-in-form').on('submit', authEvents.onSignIn)
   $('#change-password-form').on('submit', authEvents.onChangePassword)
   $('#sign-out-button').on('click', authEvents.onSignOut)
   $('#create-new-user-button').on('click', () => {
-    state.setAuthState(1)
+    state.showCreateUser()
   })
-  $('#change-password-button').on('click', () => {
-    state.setAuthState(3)
-  })
+  $('#change-password-button').on('click', state.showChangePassword)
+  $('#cancel-change-pwd').on('click', state.hideChangePassword)
 
   // Game Board Events:
   $('#new-game-button').on('click', logic.onNewGame)
@@ -37,4 +36,14 @@ $(() => {
   $('#get-fin-games-button').on('click', () => { logic.showGames(true) })
   $('#get-unfin-games-button').on('click', () => { logic.showGames(false) })
   $('#get-game-form').on('submit', logic.changeGame)
+
+  $('#get-game-button').on('click', state.showSelectGame)
+  $('#hide-select-game-button').on('click', state.hideSelectGame)
+
+  $('#show-data-buttons').on('click', state.showRetrieveData)
+  $('#hide-data-button').on('click',state.hideRetrieveData)
+
+  $('#clear-data-button').on('click', () => {
+    $('#data-msg-display').html('')
+  })
 })

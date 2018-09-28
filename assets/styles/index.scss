@@ -1,17 +1,92 @@
 @import '~bootstrap/scss/bootstrap';
 
-// TODO: Improve a style
-$background-color: #6a6f77;
-$white: #fff;
+
+$dark: #101010;
+$green: #0f0;
 
 body {
-  background-color: $background-color;
+  background-color: $dark;
+  color: $green;
+  font-family: 'Ubuntu Mono', monospace;
+  margin: auto;
 }
 
-.box {
-  align-items: center;
-  border: 1px solid $white;
-  display: flex;
-  height: 80px;
+input {
+  background-color: $dark;
+  border: 1px solid $green;
+  color: $green;
+  display: inline-block;
+  margin: 6px 4px;
+  width: 120px;
+}
+
+input:focus {
+  outline: 0;
+}
+
+::placeholder {
+  color: $green;
+}
+
+form {
   justify-content: center;
+  margin: auto;
+  width: 480px;
+}
+
+.btn-default {
+  background-color: $dark;
+  border: 1px solid $green;
+  color: $green;
+  margin: 6px 4px;
+  width: 160px;
+}
+
+.btn-default:hover {
+  background-color: $green;
+  color: $dark;
+}
+
+.btn-default:focus {
+  outline: 0;
+}
+
+.game {
+  width: 480px;
+}
+
+.gamebox {
+  align-items: center;
+  border: 1px solid $green;
+  color: $green;
+  display: flex;
+  font-size: 64px;
+  height: 160px;
+  justify-content: center;
+}
+
+.gamebox:hover {
+  background-color: $green;
+  color: $dark;
+}
+
+.message {
+  align-items: center;
+  border: 1px solid $green;
+  color: $green;
+  font-size: 12px;
+  margin: auto;
+  padding: 6px 6px 0;
+  width: 480px;
+}
+
+.container {
+  justify-content: center;
+}
+
+.btn-bar {
+  align-items: center;
+  border: 1px solid $green;
+  margin: auto;
+  width: 480px;
 }
