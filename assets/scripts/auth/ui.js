@@ -42,6 +42,9 @@ const signOutSuccess = (response) => {
   store.user = null // remove all stored data on logout
   store.currentGame = null
   state.setAuthState(0)
+  $('#game-board').trigger('reset')
+  $('#data-msg-display').val('')
+  $('#current-msg-display').val('')
 }
 
 // OPTIMIZE: Create failure functions for each possible state rather than a blanket case

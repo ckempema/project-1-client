@@ -4,17 +4,12 @@ const store = require('./store.js')
 
 const resetFields = () => {
   // Reset every form field on the page to blank
-  $('#sign-in-email').val('')
-  $('#sign-in-pwd').val('')
-
-  $('#sign-up-email').val('')
-  $('#sign-up-pwd').val('')
-  $('#sign-up-pwd-conf').val('')
-
-  $('#change-pwd-old').val('')
-  $('#change-pwd-new').val('')
-
-  $('#pull-game-id').val('')
+  $('#sign-in-form').trigger('reset')
+  $('#sign-up-form').trigger('reset')
+  $('#change-password-form').trigger('reset')
+  $('#get-game-form').trigger('reset')
+  $('#data-msg-display').val('')
+  $('#current-msg-display').val('')
 }
 
 // TODO: Fix states logic to ensure it is always proper

@@ -35,7 +35,7 @@ const playGame = (response) => { // change to a new game in the main window
   store.currentGame = gameData.createGame(response.game)
   store.currentGame.setBoard()
   $('#data-msg-display').html(`Pulled Game ${store.currentGame.id} to play`)
-  $(`#current-msg-display`).html(this.statusToString())
+  $(`#current-msg-display`).html(store.currentGame.statusToString())
 }
 
 module.exports = {

@@ -131,7 +131,7 @@ class Game {
       this.status.condition = [3, 4, 5]
     } else if (cells[6] === cells[7] && cells[7] === cells[8] && cells[6] !== '') {
       this.status.over = true
-      this.status.winner = this.cells[5]
+      this.status.winner = this.cells[6]
       this.status.condition = [6, 7, 8]
     } else if (cells[0] === cells[3] && cells[3] === cells[6] && cells[0] !== '') {
       this.status.over = true
