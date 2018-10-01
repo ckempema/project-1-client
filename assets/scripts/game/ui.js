@@ -15,7 +15,6 @@ const dispGames = (response) => {
   $('#data-msg-display').append(topHTML)
   for (let i = 0; i < games.length; i++) {
     const currentGame = gameData.createGame(games[i])
-    currentGame.checkWin()
     const gameStr = currentGame.boardToHTML()
     const statusStr = currentGame.statusToString()
 

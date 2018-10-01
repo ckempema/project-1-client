@@ -5,7 +5,7 @@ const store = require('../store.js')
 
 const newGame = () => {
   /* Create a new empty game from the server
-  returns server response which contains a game object */
+  returns server response which contains an (empty) game object if good */
   return $.ajax({
     headers: {
       Authorization: `Token token=${store.user.token}`
@@ -16,7 +16,8 @@ const newGame = () => {
 }
 
 const pullGame = (gameID) => {
-  /* use api show action to request a game with given id, and return server response */
+  /* use api show action to request a game with given id, and
+  return server response */
   return $.ajax({
     headers: {
       Authorization: `Token token=${store.user.token}`

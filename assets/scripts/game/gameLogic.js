@@ -16,13 +16,15 @@ const onNewGame = () => {
     .catch((response) => {
       $(`#current-msg-display`).html('ERROR: Unable to connect to Server')
     })
+  store.compSkill = 'ADVANCED'
 }
 
 const play = (location) => {
-  /* logic to make a players move based on passed location */
+  /* logic to make a players move based on passed location from click */
   const game = store.currentGame // the game to play
   if (game !== undefined && game !== null) {
-    game.takeTurn(location)
+    game.takePlayerTurn(location)
+    game.computerTurn()
   } else {
     $(`#current-msg-display`).html('ERROR: no game is currently active. Select a game or select "New Game Button"')
   }
