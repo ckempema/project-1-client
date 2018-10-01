@@ -1,6 +1,6 @@
 'use strict'
 const store = require('../store.js')
-const score = 10 // set as decided for minMax function
+const score = 100 // set as decided for minMax function
 
 const checkWin = (cells) => {
   /* Check the game board for any win conditions
@@ -71,40 +71,29 @@ const easyAI = () => {
   const game = store.currentGame
   const move = Math.floor(Math.random() * 9)
   if (game.cells[move] === '') { // if the move is not already taken
-    console.log(`Easy: Trying to move at location ${move}`)
     return move // return the location of where to move
   }
 }
 
-const screwYouAI = (board, depth, maxPlayer, minPlayer, isMaxPlayer) => {
+const complexAI = (board, depth, maxPlayer, minPlayer, isMaxPlayer) => {
   /* A recursive function that expects the game and `x` or `o` of what symbol
   the computer is playing for, and a bool of if it is the computers turn
   NOTE: isMaxPlayer should always be true when initially called from outside code
   returns an object of the location of the location of the move and a minMax score. */
   const best = {
     val: null,
-    location: null
+    location: null,
+    all: []
   }
 
   const status = checkWin(board)
-  if (depth > 10) {
-    console.log(`ERROR NOT REACHING BASE CASE`)
-    return 0
-  }
-  // console.log(`GAME CELLS on call: ${game.cells}`)
-  // console.log(game.cells)
-
   if (status.over) { // if the game is over. Recursion Base Case
-    // console.log('Base Case')
     if (status.winner === maxPlayer) { // maxPlayer wins
-      // console.log('Winner')
       best.val = score - depth
-    } else if (status.winner !== maxPlayer) { // maxPlayer loses
-      // console.log('Loser')
+    } else if (status.winner === minPlayer) { // maxPlayer loses
       best.val = -score + depth // prolonging the inevitable is good
     } else {
-      // console.log('Tie')
-      best.val = 0 - depth
+      best.val = 0 + depth
     }
     return best // Exit the recursion if the game is over
   }
@@ -114,12 +103,8 @@ const screwYouAI = (board, depth, maxPlayer, minPlayer, isMaxPlayer) => {
     for (let i = 0; i < 9; i++) { // for each square
       if (board[i] === '') { // if not filled
         const local = board.slice()
-        // console.log('Max Local', local)
         local[i] = maxPlayer
-        // console.log(`Local MAX`, local.cells)
-        // console.log(`Parent MAX`, game.cells)
-        // console.log(`Recursing Max Player Loc: ${i} Depth: ${depth}`)
-        const newVal = screwYouAI(local, depth + 1, maxPlayer, minPlayer, false)
+        const newVal = complexAI(local, depth + 1, maxPlayer, minPlayer, false)
         if (newVal.val > best.val) {
           best.val = newVal.val
           best.location = i
@@ -132,12 +117,8 @@ const screwYouAI = (board, depth, maxPlayer, minPlayer, isMaxPlayer) => {
     for (let i = 0; i < 9; i++) {
       if (board[i] === '') {
         const local = board.slice()
-        // console.log(`Min Local`, local)
         local[i] = minPlayer
-        // console.log(`Local Game Min:`, local)
-        // console.log(`Parent Game Min: `, game)
-        // console.log(`Recursing Min Player Loc: ${i} Depth: ${depth}`)
-        const newVal = screwYouAI(local, depth + 1, maxPlayer, minPlayer, true)
+        const newVal = complexAI(local, depth + 1, maxPlayer, minPlayer, true)
         if (newVal.val < best.val) {
           best.val = newVal.val
           best.location = i
@@ -156,12 +137,9 @@ const executeAI = (marker) => {
   if (!store.currentGame.status.over) { // If the game is not over
     if (store.compSkill === 'ADVANCED') {
       const local = store.currentGame.cells.slice()
-      const best = screwYouAI(local, 0, 'o', 'x', true)
-      console.log('BEST on total return: ', best)
-      console.log('current on total return', store.currentGame)
+      const best = complexAI(local, 0, 'o', 'x', true)
       return best.location
     } else if (store.compSkill === 'EASY') {
-      console.log('Running Easy AI')
       return easyAI()
     } else {
       return false

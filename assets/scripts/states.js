@@ -8,6 +8,7 @@ const resetFields = () => {
   $('#sign-up-form').trigger('reset')
   $('#change-password-form').trigger('reset')
   $('#get-game-form').trigger('reset')
+  $('#game-board').trigger('reset')
   $('#data-msg-display').val('')
   $('#current-msg-display').val('')
 }
@@ -32,6 +33,11 @@ const reset = () => {
   resetFields()
   store.token = null // ensure that no user token exists in default state
   store.currentGame = null // Ensure there are no games active
+  $('#data-msg-display').html('>')
+  $('#current-msg-display').html('>')
+  for (let i = 0; i < 9; i++) {
+    $(`#game-box-${i}`).empty()
+  }
 }
 
 const showCreateUser = () => {
@@ -50,6 +56,7 @@ const setSignedIn = () => {
 
   $('#user-auth-buttons').show()
   $('#change-password-button').show()
+  $('#show-data-buttons').show()
 
   // Game Data:
   $('#game-board').show() // Show all the data

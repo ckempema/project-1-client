@@ -30,21 +30,14 @@ const changePasswordSuccess = (response) => {
     <h6>Password Changed!</h6>
     `)
   $('#auth_messages').append(outputHTML)
-  state.setSignedIn(2)
+  state.setSignedIn()
 }
 
 const signOutSuccess = (response) => {
-  $('#auth_messages').html('')
-  const outputHTML = (`
-    <h4> Signed Out</h4>
-    `)
-  $('#auth_messages').append(outputHTML)
-  store.user = null // remove all stored data on logout
-  store.currentGame = null
+  $('#auth_messages').html(`Signed Out`)
+  // store.user = null // remove all stored data on logout
+  // store.currentGame = null
   state.reset()
-  $('#game-board').trigger('reset')
-  $('#data-msg-display').val('')
-  $('#current-msg-display').val('')
 }
 
 // OPTIMIZE: Create failure functions for each possible state rather than a blanket case

@@ -2,7 +2,6 @@
 /* Contains the game logic for tic tac toe */
 const api = require('./api.js')
 const ai = require('./ai.js')
-const store = require('../store.js')
 
 class Game {
   /* A class that contains the game state as well as functions
@@ -84,13 +83,14 @@ class Game {
       Returns true if everything was valid,
       false if turn not valid
       */
-    console.log(`Player Turn: Marker ${this._currentPlayer} at ${location}`)
+    // console.log(`Player Turn: Marker ${this._currentPlayer} at ${location}`)
     if (!this.status.over) { // If the game is not over
       if (this.setLocation(location)) { // if the location was set correctly
         this.movesMade += 1
         this.rotatePlayer()
         this.status = ai.checkWin(this.cells)
         $(`#current-msg-display`).html(this.statusToString())
+        return true
       } else {
         return false
       }
@@ -100,43 +100,44 @@ class Game {
   }
 
   computerTurn () {
-    if (this.hasComputerPlayers) {
-      if (this.getCurrentPlayerAI) {
-        console.log(`Making move for Player ${this._currentPlayer} on ${store.compSkill} level`)
-        const location = ai.executeAI(this.getCurrentPlayer)
-        console.log(`Computer attempting to play at ${location} within computerTurn`)
-        console.log('Current game before computer set location', this.cells)
-        if (this.setLocation(location)) {
-          console.log(`Success: Player Moved at ${location}`)
-          this.movesMade += 1
-          this.rotatePlayer()
-          this.status = ai.checkWin(this.cells)
-          $(`#current-msg-display`).html(this.statusToString())
-        } else {
-          console.log(`Invalid computer move at ${location}`)
-          // $(`#current-msg-display`).html(`Computer has attempted invalid move at ${compLoc}`)
+    this.status = ai.checkWin(this.cells)
+    if (!this.status.over) { // if the game is not over
+      if (this.hasComputerPlayers) {
+        if (this.getCurrentPlayerAI) {
+          const location = ai.executeAI(this.getCurrentPlayer)
+          // console.log(`Computer attempting to play at ${location} within computerTurn`)
+          if (this.setLocation(location)) {
+            // console.log(`Success: Computer Moved at ${location}`)
+            this.movesMade += 1
+            this.rotatePlayer()
+            this.status = ai.checkWin(this.cells)
+            $(`#current-msg-display`).html(this.statusToString())
+          } else {
+            // console.log(`Invalid computer move at ${location}`)
+            // $(`#current-msg-display`).html(`Computer has attempted invalid move at ${compLoc}`)
+          }
         }
+        return true
+      } else {
+        $(`#current-msg-display`).html(`WARNING: Invalid Move`)
+        this.setBoard()
       }
-      return true
-    } else {
-      $(`#current-msg-display`).html(`WARNING: Invalid Move`)
-      this.setBoard()
     }
   }
 
   setLocation (location) {
-    console.log(`Attempting to set location ${location} with ${this._currentPlayer}`)
+    // console.log(`Attempting to set location ${location} with ${this._currentPlayer}`)
     /* Set the value of a location on the gameboard to marker to the given marker
     Contains validiation of location input
     Returns false if failed to set for any reason
     Returns true if valid selection and correct assignment */
-    if (location < 9 && location !== null) { // Check that location is inside of game board
-      console.log(`Valid Location called in setLocation: ${location}`)
-      console.log('Current Game', this.cells)
-      if (this.cells[location] === undefined || this.cells[location] === '') {
+    if (location < 9 && location !== null) { // Check that location is valid
+      // console.log(`Valid Location called in setLocation: ${location}`)
+      // console.log('Current Game', this.cells)
+      if (this.cells[location] === '') {
         this.cells[location] = this._currentPlayer // update the local copy
         this.status = ai.checkWin(this.cells)
-        console.log(this.status)
+        // console.log(this.status)
 
         const update = { // prepare an update object for the api
           index: location,
@@ -149,9 +150,6 @@ class Game {
           })
           .catch((response) => {
             $(`#current-msg-display`).html('ERROR: Unable to update server Loc: gameData setLocation ~150')
-            console.log(response)
-            console.log(update)
-            console.log(this.id)
           })
         $(`#game-box-${location}`).html(this._currentPlayer.toUpperCase())
 

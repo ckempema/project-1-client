@@ -27,11 +27,14 @@ $(() => {
 
   // Game Board Events:
   $('#new-game-button').on('click', logic.onNewGame)
+
   for (let i = 0; i < 9; i++) { // set up the game board tiles with event listeners
     $(`#game-box-${i}`).on('click', () => {
       logic.play(i)
     })
   }
+
+  $('#make-ai-move').on('click', logic.makeComputerTurn)
   $('#get-all-games-button').on('click', () => { logic.showGames() })
   $('#get-fin-games-button').on('click', () => { logic.showGames(true) })
   $('#get-unfin-games-button').on('click', () => { logic.showGames(false) })
@@ -41,7 +44,7 @@ $(() => {
   $('#hide-select-game-button').on('click', state.hideSelectGame)
 
   $('#show-data-buttons').on('click', state.showRetrieveData)
-  $('#hide-data-button').on('click',state.hideRetrieveData)
+  $('#hide-data-button').on('click', state.hideRetrieveData)
 
   $('#clear-data-button').on('click', () => {
     $('#data-msg-display').html('')
