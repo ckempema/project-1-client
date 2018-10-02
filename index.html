@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Tic Tac Toe</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Do not add `link` tags-->
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+      <!-- Do not add `script` tags-->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+    <body>
+      <aside id=authentication class="container">
+        <h1 id="page-title">Tic Tac Toe Game</h1>
+        <form id="sign-in-form" class='input'>
+          <legend> Sign In </legend>
+          <input id="sign-in-email" name="credentials[email]" type="email" required placeholder="Email" autocomplete="username"/>
+          <input id="sign-in-pwd" name="credentials[password]" type="password" required placeholder="Password" autocomplete="current-password"/>
+          <input name="sign-in" type="submit" class='btn-default'/>
+        </form>
+        <button id="create-new-user-button" type="button" class='btn-default'> Create New User </button>
+        <form id="sign-up-form" class="input">
+          <legend> Create User </legend>
+          <input id="sign-up-email" name="credentials[email]" type="email" required placeholder="Email" autocomplete="username"/>
+          <input id="sign-up-pwd" name="credentials[password]" type="password" required placeholder="Password" autocomplete="new-password"/>
+          <input id="sign-up-pwd-conf" name="credentials[password_confirmation]" type="password" placeholder="Confirm Password" autocomplete="new-password"/>
+          <input name="create-new" type="submit" class='btn-default'/>
+        </form>
+
+        <form id="change-password-form" class="input">
+          <legend> Change Password </legend>
+          <input id="change-pwd-old" name="passwords[old]" type="password" required placeholder="Old Password" autocomplete="current-password"/>
+          <input id="change-pwd-new" name="passwords[new]" type="password" required placeholder="New Password" autocomplete="new-password"/>
+          <input name="change" type="submit" class='btn-default'/>
+          <button id="cancel-change-pwd" type="button" class="btn-default"> Cancel </button>
+        </form>
+
+        <br />
+        <div id='user-auth-buttons' class="btn-group">
+          <button id="change-password-button" class="btn-default"> Change Password </button>
+          <button id="sign-out-button" class="btn-default"> Sign Out </button>
+        </div>
+
+        <br />
+        <div id=auth_messages class="message"> > </div>
+      </aside>
+      <br />
+      <br />
+      <!-- TODO: Create a better gameboard -->
+      <!-- OPTIMIZE: Use bootstrap to create gameboard? -->
+      <div id=game-board class="container game">
+        <div id=gb-row-0 class="row">
+          <div id=game-box-0 class="col-4 gamebox">         </div>
+          <div id=game-box-1 class="col-4 gamebox">         </div>
+          <div id=game-box-2 class="col-4 gamebox">         </div>
+        </div>
+        <div id=gb-row-1 class="row">
+          <div id=game-box-3 class="col-4 gamebox">         </div>
+          <div id=game-box-4 class="col-4 gamebox">         </div>
+          <div id=game-box-5 class="col-4 gamebox">         </div>
+        </div>
+        <div id=gb-row-2 class="row">
+          <div id=game-box-6 class="col-4 gamebox">         </div>
+          <div id=game-box-7 class="col-4 gamebox">         </div>
+          <div id=game-box-8 class="col-4 gamebox">         </div>
+        </div>
+        <br />
+      </div>
+
+      <div id="game-data" class="container box">
+        <div id="current-msg-display" class='message'> > </div>
+        <br />
+
+        <div id="game-button-bar" class="btn-group">
+          <button id="make-ai-move" class="btn-default"> AI Move </button>
+          <button id="new-game-button" class="btn-default"> New Game </button>
+          <button id="get-game-button" class="btn-default"> Select Game </button>
+          <button id="hide-select-game-button" class="btn-default"> Hide Selector </button>
+          <button id="show-data-buttons" class="btn-default"> Retrieve Games </button>
+          <button id="hide-data-button" class="btn-default"> Hide Data </button>
+        </div>
+
+        <form id="get-game-form">
+          <legend> Select a Game </legend>
+          <input id="pull-game-id" name="id" type="text" placeholder="Game ID"/>
+          <input name="get-game" type="submit" class='btn-default'/>
+        </form>
+
+        <div id="retrieve-data" class="container">
+          <br />
+          <div id="game-data-bar" class="container">
+            <button id="get-all-games-button" class="btn-default"> All Games </button>
+            <button id="get-fin-games-button" class="btn-default"> Complete </button>
+            <button id="get-unfin-games-button" class="btn-default"> Incomplete </button>
+            <button id="clear-data-button" class="btn-default"> Clear Window </button>
+          </div>
+          <div id="data-msg-display" class="message"> > </div>
+        </div>
+      </div>
+    </body>
+</html>
