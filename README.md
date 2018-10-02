@@ -17,7 +17,7 @@ This tic tac toe game uses the following technologies for implementation:
 
   Not V1: As a user, I want to be able to chose to play against a user or a computer opponent.
 
-  [!V1 Wireframe](public/project1_wireframe_v1_0.png)
+  [V1 Wireframe](public/project1_wireframe_v1_0.png)
 
 ## Planning
   For planning I laid out a rough structure of what was required for mvp then wrote code in the order:
