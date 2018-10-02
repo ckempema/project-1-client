@@ -16,23 +16,23 @@
         <h1 id="page-title">Tic Tac Toe Game</h1>
         <form id="sign-in-form" class='input'>
           <legend> Sign In </legend>
-          <input id="sign-in-email" name="credentials[email]" type="email" required placeholder="Email"/>
-          <input id="sign-in-pwd" name="credentials[password]" type="password" required placeholder="Password"/>
+          <input id="sign-in-email" name="credentials[email]" type="email" required placeholder="Email" autocomplete="username"/>
+          <input id="sign-in-pwd" name="credentials[password]" type="password" required placeholder="Password" autocomplete="current-password"/>
           <input name="sign-in" type="submit" class='btn-default'/>
         </form>
         <button id="create-new-user-button" type="button" class='btn-default'> Create New User </button>
         <form id="sign-up-form" class="input">
           <legend> Create User </legend>
-          <input id="sign-up-email" name="credentials[email]" type="email" required placeholder="Email"/>
-          <input id="sign-up-pwd" name="credentials[password]" type="password" required placeholder="Password"/>
-          <input id="sign-up-pwd-conf" name="credentials[password_confirmation]" type="password" placeholder="Confirm Password"/>
+          <input id="sign-up-email" name="credentials[email]" type="email" required placeholder="Email" autocomplete="username"/>
+          <input id="sign-up-pwd" name="credentials[password]" type="password" required placeholder="Password" autocomplete="new-password"/>
+          <input id="sign-up-pwd-conf" name="credentials[password_confirmation]" type="password" placeholder="Confirm Password" autocomplete="new-password"/>
           <input name="create-new" type="submit" class='btn-default'/>
         </form>
 
         <form id="change-password-form" class="input">
           <legend> Change Password </legend>
-          <input id="change-pwd-old" name="passwords[old]" type="password" required placeholder="Old Password"/>
-          <input id="change-pwd-new" name="passwords[new]" type="password" required placeholder="New Password"/>
+          <input id="change-pwd-old" name="passwords[old]" type="password" required placeholder="Old Password" autocomplete="current-password"/>
+          <input id="change-pwd-new" name="passwords[new]" type="password" required placeholder="New Password" autocomplete="new-password"/>
           <input name="change" type="submit" class='btn-default'/>
           <button id="cancel-change-pwd" type="button" class="btn-default"> Cancel </button>
         </form>
