@@ -137,7 +137,12 @@ const executeAI = (marker) => {
   if (!store.currentGame.status.over) { // If the game is not over
     if (store.compSkill === 'ADVANCED') {
       const local = store.currentGame.cells.slice()
-      const best = complexAI(local, 0, 'o', 'x', true)
+      let best
+      if (store.currentPlayer === 'x') {
+        best = complexAI(local, 0, 'x', 'o', true)
+      } else {
+        best = complexAI(local, 0, 'o', 'x', true)
+      }
       return best.location
     } else if (store.compSkill === 'EASY') {
       return easyAI()

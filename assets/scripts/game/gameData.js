@@ -20,10 +20,6 @@ class Game {
     this.movesMade = 0
     this.status = ai.checkWin(this.cells) // Set the win status to the correct values
     this.updateCurrentPlayer() // Set the current player to the right player
-
-    this.hasComputerPlayers = true
-    this.player_x.isComputer = false
-    this.player_o.isComputer = true // FIXME: bug null assignment see line 14
   }
 
   getCurrentPlayer () {
@@ -100,28 +96,27 @@ class Game {
   }
 
   computerTurn () {
+    /* Run the computer AI turn if button is clicked
+    Calls ai.execute ai for a location to play in
+    makes all necessary logic adjustments for gameplay
+    */
     this.status = ai.checkWin(this.cells)
     if (!this.status.over) { // if the game is not over
-      if (this.hasComputerPlayers) {
-        if (this.getCurrentPlayerAI) {
-          const location = ai.executeAI(this.getCurrentPlayer)
-          // console.log(`Computer attempting to play at ${location} within computerTurn`)
-          if (this.setLocation(location)) {
-            // console.log(`Success: Computer Moved at ${location}`)
-            this.movesMade += 1
-            this.rotatePlayer()
-            this.status = ai.checkWin(this.cells)
-            $(`#current-msg-display`).html(this.statusToString())
-          } else {
-            // console.log(`Invalid computer move at ${location}`)
-            // $(`#current-msg-display`).html(`Computer has attempted invalid move at ${compLoc}`)
-          }
-        }
-        return true
+      const location = ai.executeAI(this.getCurrentPlayer)
+      // console.log(`Computer attempting to play at ${location} within computerTurn`)
+      if (this.setLocation(location)) {
+        // console.log(`Success: Computer Moved at ${location}`)
+        this.movesMade += 1
+        this.rotatePlayer()
+        this.status = ai.checkWin(this.cells)
+        $(`#current-msg-display`).html(this.statusToString())
       } else {
-        $(`#current-msg-display`).html(`WARNING: Invalid Move`)
-        this.setBoard()
+        $(`#current-msg-display`).html(`ERROR: Computer has attempted invalid move at ${location}`)
       }
+      return true
+    } else {
+      $(`#current-msg-display`).html(`WARNING: Invalid Move`)
+      this.setBoard()
     }
   }
 
@@ -166,7 +161,8 @@ class Game {
 
   boardToHTML () {
     /* return a pretty string of the game state */
-    // TODO: Make this much much better
+    // TODO: Make this pretty
+    // IDEA: Use html to append a nice html board of the games
     const temp = this.cells
     for (let i = 0; i < temp.length; i++) {
       if (temp[i] === '') {
